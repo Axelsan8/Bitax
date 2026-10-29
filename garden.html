@@ -2,40 +2,78 @@
 <html lang="es">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#204f43"><meta name="description" content="El Jardín de las Posibilidades de ANIMA.">
+<meta name="theme-color" content="#204f43"><meta name="description" content="Explora conexiones y posibilidades en el Jardín de ANIMA.">
 <link rel="stylesheet" href="styles/main.css"><link rel="stylesheet" href="styles/garden.css">
 <title>El Jardín — ANIMA</title>
 </head>
 <body><div class="app-shell">
 <header class="topbar"><a class="brand" href="index.html"><span class="brand-mark">✳</span><span>ANIMA<small>RED VIVA · 0.2</small></span></a><a class="back-link" href="index.html">← Volver a mi espacio</a></header>
 <main class="garden-page">
-<div class="garden-heading"><div class="kicker">ECOSISTEMA · POSIBILIDADES</div><h1>El Jardín<br><em>de las Posibilidades</em></h1><p>No es un ranking ni una puntuación. Es una representación de lo que puede crecer cuando una intención encuentra capacidades, apoyo y colaboración.</p></div>
-<section class="garden-art" aria-label="Ilustración conceptual de un jardín vivo">
-<div class="sun"></div><div class="hills"></div><div class="stem stem-a"><i></i><b></b></div><div class="stem stem-b"><i></i><b></b></div><div class="stem stem-c"><i></i><b></b></div>
-<span class="art-label seed-label">SEMILLAS · IDEAS</span><span class="art-label root-label">RAÍCES · CAPACIDADES</span><span class="art-label flower-label">FLORES · INICIATIVAS</span>
-</section>
+<div class="garden-heading"><div class="kicker">ECOSISTEMA · POSIBILIDADES</div><h1>El Jardín<br><em>de las Posibilidades</em></h1><p>Explora cómo tus ideas, capacidades, necesidades e iniciativas pueden relacionarse. Toca cada elemento para descubrir sus conexiones.</p></div>
 <section class="garden-intro"><div><div class="kicker">TU ECOSISTEMA PERSONAL</div><h2 id="garden-title">Tu jardín está esperando</h2><p id="garden-description">Los elementos aparecerán aquí a medida que completes tu espacio.</p></div><div class="garden-stats"><div><strong id="seed-count">0</strong><span>semillas</span></div><div><strong id="skill-count">0</strong><span>capacidades</span></div><div><strong id="need-count">0</strong><span>necesidades</span></div><div><strong id="project-count">0</strong><span>iniciativas</span></div></div></section>
-<section class="garden-grid">
-<article class="garden-card"><span class="symbol seed">✧</span><div class="kicker">SEMILLAS</div><h3>Ideas e intención</h3><p>Lo que te mueve, imaginas y quieres explorar.</p><div id="intent-tags" class="chips"><span class="muted">Aún sin definir</span></div></article>
-<article class="garden-card"><span class="symbol root">⌁</span><div class="kicker">RAÍCES</div><h3>Capacidades</h3><p>Conocimientos y habilidades que decides poner en juego.</p><div id="skill-tags" class="chips"><span class="muted">Añade capacidades en tu perfil</span></div></article>
-<article class="garden-card"><span class="symbol water">≈</span><div class="kicker">AGUA</div><h3>Necesidades y apoyos</h3><p>Lo que puede nutrir tus procesos o ayudar a que algo avance.</p><div id="need-tags" class="chips"><span class="muted">Nombra lo que necesitas</span></div></article>
-<article class="garden-card"><span class="symbol bloom">✿</span><div class="kicker">FLORES</div><h3>Iniciativas en desarrollo</h3><div id="project-list" class="project-list"><p class="muted">Tus proyectos aparecerán aquí.</p></div></article>
+<section class="map-panel">
+<div class="map-toolbar"><div><div class="kicker">MAPA VIVO</div><h2>Explora tus conexiones</h2><p>Las líneas muestran relaciones sugeridas por coincidencias de palabras, no vínculos confirmados.</p></div><button class="map-reset" id="show-all">Ver todo el jardín</button></div>
+<div class="map-legend"><span><i class="legend-seed"></i>Semillas</span><span><i class="legend-root"></i>Capacidades</span><span><i class="legend-water"></i>Necesidades</span><span><i class="legend-flower"></i>Proyectos</span></div>
+<div class="map-scroll"><div class="living-map" id="living-map"><svg id="map-lines" viewBox="0 0 800 440" preserveAspectRatio="none" aria-hidden="true"></svg><div id="map-nodes"></div><div id="map-empty" class="map-empty">Tu jardín empieza con una idea.<br><a href="index.html">Completa tu perfil o crea un proyecto ↗</a></div></div></div>
+<div class="map-caption"><span>✳</span> Selecciona una semilla, raíz, necesidad o flor para explorar sus relaciones.</div>
 </section>
-<section class="garden-cta"><div><div class="kicker">SIGUIENTE MOVIMIENTO</div><h2>Todo jardín empieza con un gesto.</h2><p>Completa tu perfil o crea una iniciativa. HARMONIA podrá explorar coincidencias entre capacidades y necesidades, sin decidir por las personas.</p></div><div class="cta-actions"><a class="cta-light" href="index.html">Cultivar mi perfil</a><a class="cta-lime" href="index.html">Sembrar un proyecto ↗</a></div></section>
-<p class="garden-note">Esta versión representa únicamente los datos guardados en tu navegador. No hay perfiles de otras personas, conexiones reales ni intercambio comunitario todavía.</p>
+<section class="explorer-layout">
+<article class="detail-panel" id="detail-panel" aria-live="polite"><div class="detail-placeholder"><span class="detail-icon">✧</span><div class="kicker">EXPLORADOR</div><h2>Elige un elemento del jardín</h2><p>Al seleccionarlo verás qué información contiene y qué otros elementos podrían estar relacionados.</p></div></article>
+<aside class="grow-panel"><div class="kicker">CULTIVAR</div><h2>Siembra una posibilidad</h2><p>Agrega una idea a tus intereses. Se guardará en este dispositivo y aparecerá en tu mapa.</p><form id="seed-form"><label for="new-seed">¿Qué te gustaría explorar?</label><input id="new-seed" maxlength="80" required placeholder="Ej. huertos comunitarios"><button class="primary" type="submit">＋ Añadir semilla</button></form><div class="grow-note">Una semilla no es una promesa ni un compromiso. Puedes cambiarla o quitarla desde tu perfil cuando quieras.</div><a class="profile-link" href="index.html">Editar perfil y proyectos ↗</a></aside>
+</section>
+<section class="garden-principles"><div><span>01</span><strong>Explorar</strong><p>Conoce tus elementos y sus relaciones.</p></div><div><span>02</span><strong>Conectar</strong><p>Identifica posibilidades para conversar.</p></div><div><span>03</span><strong>Cultivar</strong><p>Alimenta una idea con capacidades y apoyo.</p></div><div><span>04</span><strong>Florecer</strong><p>Convierte una posibilidad en una iniciativa elegida.</p></div></section>
+<p class="garden-note">Privado por diseño: esta versión solo utiliza los datos locales de tu navegador. No representa a otras personas ni crea conexiones comunitarias. Las relaciones son sugerencias experimentales y requieren conversación y consentimiento.</p>
 </main><footer><span>ANIMA · RED VIVA</span><span>Un prototipo para colaborar con intención.</span></footer>
-</div><script>
-(()=>{"use strict";const KEY="anima-red-viva-v02";let data={profile:{},projects:[]};try{const v=JSON.parse(localStorage.getItem(KEY)||"{}");if(v&&typeof v==="object")data=v;}catch{}
-const p=data.profile||{};const projects=Array.isArray(data.projects)?data.projects:[];
-const split=s=>String(s||"").split(/[,;\\n]+/).map(x=>x.trim()).filter(Boolean);
-const skills=split(p.skills),needs=split(p.needs),interests=split(p.interests);
-const $=id=>document.getElementById(id);const safe=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-function tags(id,items,empty){$(id).innerHTML=items.length?items.slice(0,10).map(x=>'<span class="chip">'+safe(x)+'</span>').join(""):'<span class="muted">'+empty+'</span>';}
-$("garden-title").textContent=p.alias?"El jardín de "+p.alias:"Tu jardín está esperando";
-$("garden-description").textContent=p.intention||"Cada capacidad, necesidad e iniciativa que registres puede convertirse en parte de un ecosistema de colaboración.";
-$("seed-count").textContent=projects.length+(p.intention?1:0)+interests.length;
-$("skill-count").textContent=skills.length;$("need-count").textContent=needs.length;$("project-count").textContent=projects.length;
-tags("intent-tags",[...(p.intention?[p.intention]:[]),...interests],"Aún sin definir");tags("skill-tags",skills,"Añade capacidades en tu perfil");tags("need-tags",needs,"Nombra lo que necesitas");
-$("project-list").innerHTML=projects.length?projects.slice(0,8).map(x=>'<div class="project"><span>✿</span><div><strong>'+safe(x.name||"Iniciativa")+'</strong><small>'+safe(x.needs||"Necesidades por definir")+'</small></div></div>').join(""):'<p class="muted">Tus proyectos aparecerán aquí.</p>';
+</div>
+<script>
+(()=>{"use strict";
+const KEY="anima-red-viva-v02";const $=id=>document.getElementById(id);
+const safe=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const norm=s=>String(s||"").toLocaleLowerCase("es").normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim();
+const split=s=>String(s||"").split(/[,;\n]+/).map(x=>x.trim()).filter(Boolean);
+const load=()=>{try{const x=JSON.parse(localStorage.getItem(KEY)||"{}");return x&&typeof x==="object"?x:{}}catch{return {}}};
+let data=load(),selectedId=null,nodes=[];
+function save(){try{localStorage.setItem(KEY,JSON.stringify(data));return true}catch{$("detail-panel").innerHTML='<p class="muted">No se pudo guardar. Revisa el almacenamiento del navegador.</p>';return false}}
+function buildNodes(){
+ const p=data.profile||{},out=[];let n=0;
+ const add=(type,label,description,terms,extra={})=>{out.push({id:type+"-"+(n++),type,label,description,terms:terms.map(norm).filter(Boolean),...extra})};
+ if(p.intention)add("seed",p.intention,"Tu intención principal",[p.intention],{position:[50,13]});
+ split(p.interests).forEach((x,i)=>add("seed",x,"Un interés que elegiste explorar",[x],{position:[[19,28],[42,32],[67,27],[84,39],[31,48],[75,51]][i%6]}));
+ split(p.skills).forEach((x,i)=>add("root",x,"Una capacidad que has decidido registrar",[x],{position:[[12,65],[33,78],[54,69],[74,78],[91,65],[43,90]][i%6]}));
+ split(p.needs).forEach((x,i)=>add("water",x,"Una necesidad o apoyo que has identificado",[x],{position:[[21,53],[46,47],[68,57],[86,51]][i%4]}));
+ (Array.isArray(data.projects)?data.projects:[]).forEach((x,i)=>add("flower",x.name||"Iniciativa",x.interests||"Proyecto en desarrollo",split((x.needs||"")+";"+(x.interests||"")),{project:x,position:[[29,24],[61,20],[79,37],[52,39],[16,40]][i%5]}));
+ return out;
+}
+function typeName(t){return({seed:"Semilla",root:"Capacidad",water:"Necesidad",flower:"Iniciativa"})[t]||"Elemento"}
+function related(node){return nodes.filter(other=>other.id!==node.id&&node.terms.some(a=>other.terms.some(b=>a===b||a.includes(b)||b.includes(a))));}
+function render(){
+ data=load();const p=data.profile||{},projects=Array.isArray(data.projects)?data.projects:[];
+ nodes=buildNodes();
+ $("garden-title").textContent=p.alias?"El jardín de "+p.alias:"Tu jardín está esperando";
+ $("garden-description").textContent=p.intention||"Cada elemento que registres puede convertirse en parte de un ecosistema de colaboración.";
+ $("seed-count").textContent=nodes.filter(n=>n.type==="seed").length;$("skill-count").textContent=nodes.filter(n=>n.type==="root").length;$("need-count").textContent=nodes.filter(n=>n.type==="water").length;$("project-count").textContent=projects.length;
+ $("map-empty").style.display=nodes.length?"none":"block";
+ const pos=n=>[n.position[0]*8,n.position[1]*4.4];
+ let lines="";
+ nodes.forEach((a,i)=>nodes.slice(i+1).forEach(b=>{if(a.terms.some(x=>b.terms.some(y=>x===y||x.includes(y)||y.includes(x)))){const [x1,y1]=pos(a),[x2,y2]=pos(b);lines+='<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" />';}}));
+ $("map-lines").innerHTML=lines;
+ $("map-nodes").innerHTML=nodes.map(n=>'<button class="map-node node-'+n.type+(n.id===selectedId?' selected':'')+'" data-node="'+safe(n.id)+'" style="left:'+n.position[0]+'%;top:'+n.position[1]+'%" aria-label="'+typeName(n.type)+': '+safe(n.label)+'"><span class="node-symbol">'+({seed:"✧",root:"⌁",water:"≈",flower:"✿"})[n.type]+'</span><span class="node-label">'+safe(n.label)+'</span></button>').join("");
+ if(selectedId&&!nodes.some(n=>n.id===selectedId))selectedId=null;
+ if(selectedId)showDetail(selectedId);else showPlaceholder();
+}
+function showPlaceholder(){$("detail-panel").innerHTML='<div class="detail-placeholder"><span class="detail-icon">✧</span><div class="kicker">EXPLORADOR</div><h2>Elige un elemento del jardín</h2><p>Al seleccionarlo verás qué información contiene y qué otros elementos podrían estar relacionados.</p></div>';}
+function showDetail(id){
+ const node=nodes.find(n=>n.id===id);if(!node)return showPlaceholder();
+ const matches=related(node);
+ const suggestions=matches.length?matches.map(x=>'<button class="related-item" data-node="'+safe(x.id)+'"><span class="mini-symbol '+x.type+'">'+({seed:"✧",root:"⌁",water:"≈",flower:"✿"})[x.type]+'</span><span><strong>'+safe(x.label)+'</strong><small>'+typeName(x.type)+' · explorar relación</small></span><b>↗</b></button>').join(""):'<p class="muted">Todavía no detectamos coincidencias de texto. Puedes explorar otros elementos o enriquecer sus descripciones.</p>';
+ $("detail-panel").innerHTML='<div class="detail-top"><span class="detail-icon '+node.type+'">'+({seed:"✧",root:"⌁",water:"≈",flower:"✿"})[node.type]+'</span><div><div class="kicker">'+typeName(node.type)+'</div><h2>'+safe(node.label)+'</h2></div></div><p class="detail-description">'+safe(node.description)+'</p><div class="detail-section"><div class="kicker">POSIBLES RELACIONES</div><p class="muted">'+matches.length+' elemento(s) con coincidencia literal. Esto no confirma compatibilidad ni colaboración.</p><div class="related-list">'+suggestions+'</div></div><div class="detail-actions"><button class="map-reset" id="clear-selection">Cerrar exploración</button></div>';
+ $("clear-selection").addEventListener("click",()=>{selectedId=null;render()});
+}
+$("map-nodes").addEventListener("click",e=>{const b=e.target.closest("[data-node]");if(!b)return;selectedId=b.dataset.node;render();});
+$("detail-panel").addEventListener("click",e=>{const b=e.target.closest("[data-node]");if(!b)return;selectedId=b.dataset.node;render();});
+$("show-all").addEventListener("click",()=>{selectedId=null;render();});
+$("seed-form").addEventListener("submit",e=>{e.preventDefault();const value=$("new-seed").value.trim();if(!value)return;data=load();data.profile=data.profile||{};const existing=split(data.profile.interests);if(!existing.some(x=>norm(x)===norm(value)))existing.push(value);data.profile.interests=existing.join(", ");if(save()){$("new-seed").value="";selectedId=null;render();}});
+window.addEventListener("storage",e=>{if(e.key===KEY){selectedId=null;render()}});
+render();
 })();
 </script></body></html>
