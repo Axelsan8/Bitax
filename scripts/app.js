@@ -71,7 +71,7 @@ function harmonia(){
 
 function radar(){
  const p=state.profile;
- const split=s=>String(s||"").split(/[,;\\n]+/).map(x=>x.trim()).filter(Boolean);
+ const split=s=>String(s||"").split(/[,;\n]+/).map(x=>x.trim()).filter(Boolean);
  const skills=split(p.skills),needs=split(p.needs),interests=split(p.interests);
  const opportunities=[];
  if(!p.alias||!p.intention||!skills.length||!needs.length){
