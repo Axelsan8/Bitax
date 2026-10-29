@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#101b19">
   <meta name="description" content="ANIMA — un espacio para conectar capacidades, necesidades e iniciativas humanas.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/anima-icon.svg" type="image/svg+xml">
   <title>ANIMA — Red Viva</title>
   <link rel="stylesheet" href="styles/main.css">
 </head>
@@ -34,5 +36,6 @@
   </div>
   <script src="scripts/harmonia.js"></script>
   <script src="scripts/app.js"></script>
+  <script>if("serviceWorker" in navigator && location.protocol!=="file:"){window.addEventListener("load",()=>navigator.serviceWorker.register("service-worker.js").catch(()=>{}));}</script>
 </body>
 </html>
