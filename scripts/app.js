@@ -29,7 +29,12 @@ function showStorageWarning(){
 }
 const tabs=[...document.querySelectorAll("[data-tab]")];
 function go(tab){
-  tabs.forEach(b=>b.classList.toggle("active",b.dataset.tab===tab));
+  tabs.forEach(b=>{
+    const active=b.dataset.tab===tab;
+    b.classList.toggle("active",active);
+    b.setAttribute("aria-current",active?"page":"false");
+  });
+  document.querySelector(".hero")?.classList.toggle("is-hidden",tab!=="home");
   ({home,pulse,profile,harmonia,projects}[tab]||home)();
   document.querySelector(".tabs")?.scrollIntoView({block:"nearest",behavior:"smooth"});
 }
@@ -63,7 +68,7 @@ function harmonia(){
  shell("HARMONIA · MOTOR EXPERIMENTAL","Conectar para crear","HARMONIA compara palabras declaradas. No evalúa el valor de nadie ni representa inteligencia artificial avanzada.",
  '<div class="notice">El porcentaje es una heurística simple basada en coincidencias de texto y disponibilidad. Puede pasar por alto sinónimos o contexto. No es una recomendación validada.</div>'+(html?'<div class="grid">'+html+'</div>':'<div class="empty">Crea un proyecto y completa tus capacidades para explorar afinidades.</div>'));
 }
-tabs.forEach(b=>b.addEventListener("click",()=>go(b.dataset.tab)));
+tabs.forEach(b=>{b.setAttribute("aria-current",b.classList.contains("active")?"page":"false");b.addEventListener("click",()=>go(b.dataset.tab));});
 document.addEventListener("click",e=>{const b=e.target.closest("[data-go]");if(b)go(b.dataset.go);});
 home();
 })();
