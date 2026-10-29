@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101b19">
+  <meta name="description" content="ANIMA — un espacio para conectar capacidades, necesidades e iniciativas humanas.">
+  <title>ANIMA — Red Viva</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="ANIMA inicio"><span class="brand-mark">✳</span><span>ANIMA<small>RED VIVA · 0.2</small></span></a>
+      <span class="local-tag"><i></i> ESPACIO LOCAL</span>
+    </header>
+    <main>
+      <section class="hero">
+        <div class="eyebrow">CUERPO · CONCIENCIA · CONEXIÓN</div>
+        <h1>La inteligencia<br><em>se vuelve vida</em><br>cuando nos conectamos.</h1>
+        <p>Un espacio para reconocer lo que sabes, expresar lo que necesitas y crear algo en común.</p>
+        <button class="primary" data-go="profile">Comenzar mi espacio <span>↗</span></button>
+      </section>
+      <nav class="tabs" aria-label="Secciones">
+        <button class="tab active" data-tab="home">Inicio</button>
+        <button class="tab" data-tab="pulse">Mi pulso</button>
+        <button class="tab" data-tab="profile">Mi perfil</button>
+        <button class="tab" data-tab="harmonia">HARMONIA</button>
+        <button class="tab" data-tab="projects">Proyectos</button>
+      </nav>
+      <section id="view" aria-live="polite"></section>
+    </main>
+    <footer><span>ANIMA · RED VIVA</span><span>Un prototipo para colaborar con intención.</span></footer>
+  </div>
+  <script src="scripts/harmonia.js"></script>
+  <script src="scripts/app.js"></script>
+</body>
+</html>
