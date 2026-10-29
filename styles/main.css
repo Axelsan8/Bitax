@@ -19,7 +19,7 @@ button{touch-action:manipulation}
 .brand-mark{display:grid;place-items:center;width:42px;height:42px;background:var(--green);color:var(--lime);border-radius:15px;font-size:27px;box-shadow:0 5px 12px #204f4320}
 .local-tag{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--line);border-radius:99px;background:#ffffff8c;color:var(--muted);font:10px 'DM Mono',monospace;letter-spacing:.08em;white-space:nowrap}
 .local-tag i{width:7px;height:7px;border-radius:50%;background:#6b9d61;box-shadow:0 0 0 3px #6b9d6120}
-.hero{position:relative;isolation:isolate;overflow:hidden;padding:54px clamp(22px,5vw,60px) 50px;margin:30px 0 20px;background:var(--green);color:#f7f7ec;border-radius:28px;box-shadow:var(--shadow)}
+.hero.is-hidden{display:none}.hero{position:relative;isolation:isolate;overflow:hidden;padding:54px clamp(22px,5vw,60px) 50px;margin:30px 0 20px;background:var(--green);color:#f7f7ec;border-radius:28px;box-shadow:var(--shadow)}
 .hero:after{content:"";position:absolute;z-index:-1;width:320px;height:320px;right:-65px;top:-100px;border:1px solid #d8f28c35;border-radius:50%;box-shadow:0 0 0 28px #d8f28c0a,0 0 0 58px #d8f28c08}
 .hero:before{content:"✳";position:absolute;right:8%;bottom:-78px;color:#d8f28c13;font-size:300px;line-height:1;transform:rotate(-14deg);z-index:-1}
 .eyebrow,.kicker{font:500 10px 'DM Mono',monospace;letter-spacing:.14em;text-transform:uppercase}
