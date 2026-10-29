@@ -1,5 +1,5 @@
-const CACHE="anima-red-viva-v02";
-const CORE=["./","./index.html","./styles/main.css","./scripts/app.js","./scripts/harmonia.js","./manifest.webmanifest","./assets/anima-icon.svg"];
+const CACHE="anima-red-viva-v03";
+const CORE=["./","./index.html","./styles/main.css","./scripts/app.js","./scripts/harmonia.js","./garden.html","./styles/garden.css","./manifest.webmanifest","./assets/anima-icon.svg"];
 self.addEventListener("install",event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)).then(()=>self.skipWaiting())));
 self.addEventListener("activate",event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim())));
 self.addEventListener("fetch",event=>{
