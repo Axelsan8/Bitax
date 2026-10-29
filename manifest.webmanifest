@@ -1,0 +1,19 @@
+{
+  "name": "ANIMA — Red Viva",
+  "short_name": "ANIMA",
+  "description": "Conecta capacidades, necesidades e iniciativas humanas.",
+  "lang": "es-MX",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#101b19",
+  "theme_color": "#101b19",
+  "icons": [
+    {
+      "src": "assets/anima-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
