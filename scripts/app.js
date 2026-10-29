@@ -35,7 +35,7 @@ function go(tab){
     b.setAttribute("aria-current",active?"page":"false");
   });
   document.querySelector(".hero")?.classList.toggle("is-hidden",tab!=="home");
-  ({home,pulse,profile,harmonia,projects}[tab]||home)();
+  ({home,pulse,profile,harmonia,projects,radar}[tab]||home)();
   document.querySelector(".tabs")?.scrollIntoView({block:"nearest",behavior:"smooth"});
 }
 function shell(kicker,title,desc,body){
@@ -44,7 +44,7 @@ function shell(kicker,title,desc,body){
 function home(){
  const p=state.profile;
  shell("TU ESPACIO","Todo comienza contigo","No necesitas tener todo resuelto. Empieza por reconocer qué puedes aportar y qué te gustaría encontrar.",
- '<div class="grid"><article class="card"><div class="kicker">IDENTIDAD DINÁMICA</div><h3>'+(p.alias?esc(p.alias):"Tu espacio está por nacer")+'</h3><p>'+(p.intention?esc(p.intention):"Define una intención y comparte solo lo que quieras.")+'</p><div class="actions"><button class="secondary" data-go="profile">Editar mi perfil</button></div></article><article class="card"><div class="kicker">MI PULSO</div><div class="big-number">'+state.pulse.length+'</div><p>registros personales guardados en este dispositivo.</p><div class="actions"><button class="secondary" data-go="pulse">Registrar cómo estoy</button></div></article><article class="card"><div class="kicker">INICIATIVAS</div><div class="big-number">'+state.projects.length+'</div><p>proyectos que has creado en tu espacio.</p><div class="actions"><button class="secondary" data-go="projects">Ver proyectos</button></div></article><article class="card"><div class="kicker">HARMONIA</div><h3>Conexiones con sentido</h3><p>Explora cómo tus capacidades podrían responder a necesidades concretas.</p><div class="actions"><button class="secondary" data-go="harmonia">Explorar afinidades</button></div></article></div><div class="notice">Privado por diseño: por ahora, toda esta información permanece en este navegador. No hay comunidad compartida ni sincronización.</div>');
+ '<div class="grid"><article class="card"><div class="kicker">IDENTIDAD DINÁMICA</div><h3>'+(p.alias?esc(p.alias):"Tu espacio está por nacer")+'</h3><p>'+(p.intention?esc(p.intention):"Define una intención y comparte solo lo que quieras.")+'</p><div class="actions"><button class="secondary" data-go="profile">Editar mi perfil</button></div></article><article class="card"><div class="kicker">MI PULSO</div><div class="big-number">'+state.pulse.length+'</div><p>registros personales guardados en este dispositivo.</p><div class="actions"><button class="secondary" data-go="pulse">Registrar cómo estoy</button></div></article><article class="card"><div class="kicker">INICIATIVAS</div><div class="big-number">'+state.projects.length+'</div><p>proyectos que has creado en tu espacio.</p><div class="actions"><button class="secondary" data-go="projects">Ver proyectos</button></div></article><article class="card radar-teaser"><div class="kicker">NUEVO · RADAR DE POSIBILIDADES</div><h3>¿Qué podemos activar?</h3><p>Convierte capacidades, necesidades e ideas en un siguiente paso concreto.</p><div class="actions"><button class="secondary" data-go="radar">Abrir mi radar ✦</button></div></article><article class="card"><div class="kicker">HARMONIA</div><h3>Conexiones con sentido</h3><p>Explora cómo tus capacidades podrían responder a necesidades concretas.</p><div class="actions"><button class="secondary" data-go="harmonia">Explorar afinidades</button></div></article></div><div class="notice">Privado por diseño: por ahora, toda esta información permanece en este navegador. No hay comunidad compartida ni sincronización.</div>');
 }
 function profile(){
  const p=state.profile;
@@ -68,7 +68,28 @@ function harmonia(){
  shell("HARMONIA · MOTOR EXPERIMENTAL","Conectar para crear","HARMONIA compara palabras declaradas. No evalúa el valor de nadie ni representa inteligencia artificial avanzada.",
  '<div class="notice">El porcentaje es una heurística simple basada en coincidencias de texto y disponibilidad. Puede pasar por alto sinónimos o contexto. No es una recomendación validada.</div>'+(html?'<div class="grid">'+html+'</div>':'<div class="empty">Crea un proyecto y completa tus capacidades para explorar afinidades.</div>'));
 }
-tabs.forEach(b=>{b.setAttribute("aria-current",b.classList.contains("active")?"page":"false");b.addEventListener("click",()=>go(b.dataset.tab));});
+
+function radar(){
+ const p=state.profile;
+ const split=s=>String(s||"").split(/[,;\\n]+/).map(x=>x.trim()).filter(Boolean);
+ const skills=split(p.skills),needs=split(p.needs),interests=split(p.interests);
+ const opportunities=[];
+ if(!p.alias||!p.intention||!skills.length||!needs.length){
+  opportunities.push({type:"Completa tu mapa",title:"Dale al Radar materia prima",desc:"Añade al menos una capacidad, una necesidad y una intención. Con eso podremos proponerte acciones más útiles.",step:"Completar mi perfil",go:"profile",why:"El Radar trabaja únicamente con información que tú decides escribir."});
+ }
+ skills.forEach(skill=>opportunities.push({type:"Capacidad disponible",title:"Activa: "+skill,desc:"Esta capacidad puede convertirse en una microacción: compartirla, practicarla o ponerla al servicio de una iniciativa.",step:"Diseñar una microacción",go:"projects",why:"La identificamos en tus capacidades declaradas."}));
+ needs.forEach(need=>opportunities.push({type:"Necesidad por atender",title:"Explora apoyo para: "+need,desc:"Convierte esta necesidad en una petición concreta: qué necesitas, para cuándo y qué intercambio o colaboración sería útil.",step:"Crear una iniciativa",go:"projects",why:"La identificamos en tus necesidades declaradas."}));
+ if(p.intention) opportunities.push({type:"Intención activa",title:"Lleva tu intención a una primera prueba",desc: "“"+p.intention+"” puede empezar con una acción pequeña que puedas realizar esta semana.",step:"Definir el primer paso",go:"projects",why:"Parte de la intención que tú escribiste."});
+ interests.forEach(interest=>opportunities.push({type:"Territorio de exploración",title:"Explora una colaboración en "+interest,desc:"Busca una actividad pequeña que conecte este interés con una capacidad o necesidad que ya tengas.",step:"Convertirlo en proyecto",go:"projects",why:"Este interés está en tu perfil."}));
+ state.projects.forEach((pr,i)=>{
+  const m=Harmonia.match(p,pr);
+  opportunities.push({type:"Proyecto propio · "+(i+1),title:pr.name,desc:"Necesidades identificadas: "+(m.missing.join(", ")||"ninguna por coincidencia literal")+". "+(m.covered.length?"Tus capacidades podrían cubrir: "+m.covered.join(", ")+".":"Revisa qué recursos hacen falta antes de invitar a alguien."),step:"Revisar proyecto",go:"projects",why:"Cruce orientativo entre tus datos y este proyecto; no representa una conexión con otras personas."});
+ });
+ const cards=opportunities.length?opportunities.map((o,i)=>'<article class="opportunity-card"><div class="opportunity-top"><span class="opportunity-index">0'+(i+1)+'</span><span class="kicker">'+esc(o.type)+'</span></div><h3>'+esc(o.title)+'</h3><p>'+esc(o.desc)+'</p><div class="why"><b>¿Por qué aparece?</b> '+esc(o.why)+'</div><div class="actions"><button class="secondary" data-go="'+o.go+'">'+esc(o.step)+' ↗</button></div></article>').join(""):'<div class="empty">Todavía no hay suficientes datos para sugerir una posibilidad.</div>';
+ shell("RADAR · POSIBILIDADES HUMANAS","No busques más contenido. Activa posibilidades.","Este radar transforma lo que tú has declarado en siguientes pasos posibles. No muestra personas ficticias ni afirma que exista una comunidad conectada.",
+ '<div class="radar-intro"><div><div class="kicker">TU MAPA ACTUAL</div><div class="radar-stats"><div><strong>'+skills.length+'</strong><span>capacidades</span></div><div><strong>'+needs.length+'</strong><span>necesidades</span></div><div><strong>'+interests.length+'</strong><span>intereses</span></div><div><strong>'+state.projects.length+'</strong><span>iniciativas</span></div></div></div><div class="radar-orbit" aria-hidden="true"><span class="orbit-core">✳</span><i class="orbit-dot dot-a"></i><i class="orbit-dot dot-b"></i><i class="orbit-dot dot-c"></i></div></div><div class="radar-section-title"><div><div class="kicker">SIGUIENTES POSIBILIDADES</div><h3>Pequeñas acciones, cambios reales.</h3></div><button class="secondary" data-go="profile">Actualizar mi mapa</button></div><div class="opportunity-grid">'+cards+'</div><div class="notice">Transparencia: esta versión genera sugerencias a partir de tus propios datos guardados en este dispositivo. No busca a otras personas, no publica tu perfil y no hace contacto automático. Las coincidencias son hipótesis para explorar, no verdades ni puntuaciones.</div>');
+}
+\ntabs.forEach(b=>{b.setAttribute("aria-current",b.classList.contains("active")?"page":"false");b.addEventListener("click",()=>go(b.dataset.tab));});
 document.addEventListener("click",e=>{const b=e.target.closest("[data-go]");if(b)go(b.dataset.go);});
 home();
 })();
