@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#204f43"><meta name="description" content="El Jardín de las Posibilidades de ANIMA.">
+<link rel="stylesheet" href="styles/main.css"><link rel="stylesheet" href="styles/garden.css">
+<title>El Jardín — ANIMA</title>
+</head>
+<body><div class="app-shell">
+<header class="topbar"><a class="brand" href="index.html"><span class="brand-mark">✳</span><span>ANIMA<small>RED VIVA · 0.2</small></span></a><a class="back-link" href="index.html">← Volver a mi espacio</a></header>
+<main class="garden-page">
+<div class="garden-heading"><div class="kicker">ECOSISTEMA · POSIBILIDADES</div><h1>El Jardín<br><em>de las Posibilidades</em></h1><p>No es un ranking ni una puntuación. Es una representación de lo que puede crecer cuando una intención encuentra capacidades, apoyo y colaboración.</p></div>
+<section class="garden-art" aria-label="Ilustración conceptual de un jardín vivo">
+<div class="sun"></div><div class="hills"></div><div class="stem stem-a"><i></i><b></b></div><div class="stem stem-b"><i></i><b></b></div><div class="stem stem-c"><i></i><b></b></div>
+<span class="art-label seed-label">SEMILLAS · IDEAS</span><span class="art-label root-label">RAÍCES · CAPACIDADES</span><span class="art-label flower-label">FLORES · INICIATIVAS</span>
+</section>
+<section class="garden-intro"><div><div class="kicker">TU ECOSISTEMA PERSONAL</div><h2 id="garden-title">Tu jardín está esperando</h2><p id="garden-description">Los elementos aparecerán aquí a medida que completes tu espacio.</p></div><div class="garden-stats"><div><strong id="seed-count">0</strong><span>semillas</span></div><div><strong id="skill-count">0</strong><span>capacidades</span></div><div><strong id="need-count">0</strong><span>necesidades</span></div><div><strong id="project-count">0</strong><span>iniciativas</span></div></div></section>
+<section class="garden-grid">
+<article class="garden-card"><span class="symbol seed">✧</span><div class="kicker">SEMILLAS</div><h3>Ideas e intención</h3><p>Lo que te mueve, imaginas y quieres explorar.</p><div id="intent-tags" class="chips"><span class="muted">Aún sin definir</span></div></article>
+<article class="garden-card"><span class="symbol root">⌁</span><div class="kicker">RAÍCES</div><h3>Capacidades</h3><p>Conocimientos y habilidades que decides poner en juego.</p><div id="skill-tags" class="chips"><span class="muted">Añade capacidades en tu perfil</span></div></article>
+<article class="garden-card"><span class="symbol water">≈</span><div class="kicker">AGUA</div><h3>Necesidades y apoyos</h3><p>Lo que puede nutrir tus procesos o ayudar a que algo avance.</p><div id="need-tags" class="chips"><span class="muted">Nombra lo que necesitas</span></div></article>
+<article class="garden-card"><span class="symbol bloom">✿</span><div class="kicker">FLORES</div><h3>Iniciativas en desarrollo</h3><div id="project-list" class="project-list"><p class="muted">Tus proyectos aparecerán aquí.</p></div></article>
+</section>
+<section class="garden-cta"><div><div class="kicker">SIGUIENTE MOVIMIENTO</div><h2>Todo jardín empieza con un gesto.</h2><p>Completa tu perfil o crea una iniciativa. HARMONIA podrá explorar coincidencias entre capacidades y necesidades, sin decidir por las personas.</p></div><div class="cta-actions"><a class="cta-light" href="index.html">Cultivar mi perfil</a><a class="cta-lime" href="index.html">Sembrar un proyecto ↗</a></div></section>
+<p class="garden-note">Esta versión representa únicamente los datos guardados en tu navegador. No hay perfiles de otras personas, conexiones reales ni intercambio comunitario todavía.</p>
+</main><footer><span>ANIMA · RED VIVA</span><span>Un prototipo para colaborar con intención.</span></footer>
+</div><script>
+(()=>{"use strict";const KEY="anima-red-viva-v02";let data={profile:{},projects:[]};try{const v=JSON.parse(localStorage.getItem(KEY)||"{}");if(v&&typeof v==="object")data=v;}catch{}
+const p=data.profile||{};const projects=Array.isArray(data.projects)?data.projects:[];
+const split=s=>String(s||"").split(/[,;\\n]+/).map(x=>x.trim()).filter(Boolean);
+const skills=split(p.skills),needs=split(p.needs),interests=split(p.interests);
+const $=id=>document.getElementById(id);const safe=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function tags(id,items,empty){$(id).innerHTML=items.length?items.slice(0,10).map(x=>'<span class="chip">'+safe(x)+'</span>').join(""):'<span class="muted">'+empty+'</span>';}
+$("garden-title").textContent=p.alias?"El jardín de "+p.alias:"Tu jardín está esperando";
+$("garden-description").textContent=p.intention||"Cada capacidad, necesidad e iniciativa que registres puede convertirse en parte de un ecosistema de colaboración.";
+$("seed-count").textContent=projects.length+(p.intention?1:0)+interests.length;
+$("skill-count").textContent=skills.length;$("need-count").textContent=needs.length;$("project-count").textContent=projects.length;
+tags("intent-tags",[...(p.intention?[p.intention]:[]),...interests],"Aún sin definir");tags("skill-tags",skills,"Añade capacidades en tu perfil");tags("need-tags",needs,"Nombra lo que necesitas");
+$("project-list").innerHTML=projects.length?projects.slice(0,8).map(x=>'<div class="project"><span>✿</span><div><strong>'+safe(x.name||"Iniciativa")+'</strong><small>'+safe(x.needs||"Necesidades por definir")+'</small></div></div>').join(""):'<p class="muted">Tus proyectos aparecerán aquí.</p>';
+})();
+</script></body></html>
